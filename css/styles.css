@@ -245,7 +245,6 @@ img {
   width: 100%;
   height: 70px;
   position: absolute;
-  content: '';
   bottom: 0px;
   justify-content: center;
   align-items: center;
@@ -429,7 +428,9 @@ img {
   width: 370px;
   margin-right: 30px;
 }
-
+.anim-link {
+  width: 370px;
+}
 .item-description {
   width: 322px;
   border-right: 1px solid #eeeeee;
@@ -441,16 +442,21 @@ img {
   width: 370px;
   padding-left: 24px;
   padding-right: 24px;
+  overflow: hidden;
 }
 .item-description .title {
   margin-bottom: 4px;
   color: var(--logo-studio-color);
 }
-.examples-item .link {
+.anim-link {
   display: block;
+
+  transition-property: box-shadow;
+  transition-duration: var(--duration-time);
+  transition-timing-function: var(--timing-function);
 }
-.examples-item > .link:hover,
-.examples-item > .link:focus {
+.anim-link:hover,
+.anim-link:focus {
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.08),
     0px 3px 1px 0px rgba(0, 0, 0, 0.1);
 }
@@ -471,19 +477,26 @@ img {
 }
 .examples-img-cover {
   position: relative;
-  content: '';
+  overflow: hidden;
 }
 .anim-description {
   position: absolute;
-  content: '';
   height: 100%;
   width: 100%;
   background-color: rgba(33, 150, 243, 0.9);
-  bottom: 0;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+
+  transform: translateY(100%);
+  transition: var(--duration-time) var(--timing-function);
 }
+.anim-link:hover .anim-description {
+  transform: translateY(0);
+}
+
 .anim-description-text {
   position: absolute;
-  content: '';
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -494,7 +507,6 @@ img {
   line-height: 1.55;
   box-shadow: none;
 }
-
 /* ==========ICON========== */
 .contact-icon {
   margin-right: 10px;
@@ -640,20 +652,28 @@ img {
 /* ========================MODAL====================== */
 .backdrop {
   position: fixed;
-  content: '';
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.1);
-  visibility: hidden;
+
+  opacity: 1;
+  transition: opacity var(--duration-time) var(--timing-function);
+}
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) skew(30deg);
 }
 .modal {
   position: absolute;
-  content: '';
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) skew(0deg);
+  transition: transform var(--duration-time) var(--timing-function);
   width: 528px;
   height: 581px;
 
@@ -661,7 +681,6 @@ img {
 }
 .modal-button {
   position: absolute;
-  content: '';
   right: 8px;
   top: 8px;
 }
